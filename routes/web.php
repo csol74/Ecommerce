@@ -1,11 +1,9 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::prefix('products')->controller(ProductController::class)->group(function () {
     Route::get('/', 'index');                    // GET /products - Listado
@@ -16,3 +14,8 @@ Route::prefix('products')->controller(ProductController::class)->group(function 
     Route::put('/{id}', 'update');               // PUT /products/{id} - Actualizar
     Route::delete('/{id}', 'destroy');           // DELETE /products/{id} - Eliminar
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'welcome']);
