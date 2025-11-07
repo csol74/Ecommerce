@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-{{-- Estilos específicos de esta vista --}}
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/index.css') }}">
 @endsection
