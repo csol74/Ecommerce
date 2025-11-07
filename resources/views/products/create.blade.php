@@ -1,51 +1,55 @@
-{{-- resources/views/productos/create.blade.php --}}
-@extends('layouts.app')
-@section('hide-navbar', true)
-@section('hide-footer', true)
-@section('css')
-    <link rel="stylesheet" href="{{ asset('css/create.css') }}">
-@endsection
+@extends('admin.layouts.app')
 @section('content')
-    <div class="navigation">
-        <a href="/products">← Volver al listado</a>
-    </div>
-    <div class="container">
-        <h1>Crear Nuevo Producto</h1>
+    <h1 class="mb-4">Crear Nuevo Producto</h1>
 
+    <div class="card">
+        <div class="cardbody">
         <form action="/products" method="POST" enctype="multipart/form-data">
-            @csrf
+        @csrf
 
-            <div class="form-group">
-                <label for="name">Nombre del Producto *</label>
-                <input type="text" id="name" name="name" required placeholder="Ingrese el nombre del producto">
-            </div>
+        <!-- Nombre del Producto -->
+        <div class="input-group input-group-outline mb-3">
+            <label for="name" class="form-label">Product Name</label>
+            <input type="text" class="form-control" id="name" name="name">
+        </div>
 
-            <div class="form-group">
-                <label for="description">Descripción *</label>
-                <textarea id="description" name="description" required placeholder="Describe las características del producto"></textarea>
-            </div>
+        <!-- Descripción del Producto -->
+        <div class="input-group input-group-outline mb-3 ">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+        </div>
 
-            <div class="form-group">
-                <label for="price">Precio *</label>
-                <input type="number" id="price" name="price" step="0.01" min="0" required placeholder="0.00">
-            </div>
+        <!-- Precio del Producto -->
+        <div class="input-group input-group-outline mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input type="number" class="form-control" id="price" name="price" step="0.01" min="0">
+        </div>
 
-            <div class="form-group">
-                <label for="image">Imagen del Producto</label>
-                <input type="file" id="image" name="image" accept="image/*">
-                <small style="color: #666;">Formatos aceptados: JPG, PNG, GIF</small>
-            </div>
+        <!-- Categoría del Producto -->
+        <div class="input-group input-group-outline mb-3">
+            <select class="form-control" id="category">
+                <option value="" selected disabled>--Category--</option>
+                 @foreach ($categories as $item)
+                    <option value="{{ $item->id }}">{{ $item->name}}</option>
+                 @endforeach
+            </select>
+        </div>
 
-            <div class="form-group">
-                <label for="brand">Marca *</label>
-                <input type="text" id="brand" name="brand" required placeholder="Ingrese la marca del producto">
-            </div>
+        <!-- Categoría del Producto -->
+        <div class="input-group input-group-outline mb-3">
+            <select class="form-control" id="brand">
+                <option value="" selected disabled>--Brand--</option>
+                 @foreach ($categories as $item)
+                    <option value="{{ $item->id }}">{{ $item->name}}</option>
+                 @endforeach
+            </select>
+        </div>
+        <!-- Botones -->
+        <div class="form-actions mt-4">
+            <button type="submit" class="btn btn-primary">Crear Producto</button>
 
-            <div class="form-actions">
-                <button type="submit" class="btn">Crear Producto</button>
-                <a href="/products" class="btn btn-secondary">Cancelar</a>
-            </div>
-        </form>
+        </div>
+    </form>
+        </div>
     </div>
 @endsection
-

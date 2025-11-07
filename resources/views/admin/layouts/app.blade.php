@@ -12,8 +12,8 @@
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
   <!-- Nucleo Icons -->
-  <link href="{{asset('/assets/css/nucleo-icons.css')}}" rel="stylesheet" />
-  <link href="{{asset('/assets/css/nucleo-svg.css')}}" rel="stylesheet" />
+ <link href="{{ asset('assets/css/nucleo-icons.css') }}" rel="stylesheet" />
+ <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet" />
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <!-- Material Icons -->
@@ -36,11 +36,11 @@
   </main>
 
   <!--   Core JS Files   -->
-  <script src="../assets/js/core/popper.min.js"></script>
-  <script src="../assets/js/core/bootstrap.min.js"></script>
-  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
-  <script src="../assets/js/plugins/chartjs.min.js"></script>
+  <script src="{{ asset('/assets/js/core/popper.min.js')}}"></script>
+  <script src="{{ asset('/assets/js/core/bootstrap.min.js')}}"></script>
+  <script src="{{ asset('/assets/js/plugins/perfect-scrollbar.min.js')}}"></script>
+  <script src="{{ asset('assets/js/plugins/smooth-scrollbar.min.js')}}"></script>
+  <script src="{{ asset('/assets/js/plugins/chartjs.min.js')}}"></script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
