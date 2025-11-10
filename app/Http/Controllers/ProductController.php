@@ -49,10 +49,19 @@ class ProductController extends Controller
 
     }
 
+    public function table(){
 
-    public function destroy($id)
-    {
+        $products = Product::orderBy('id', 'desc')->paginate(10);
 
-        return redirect('/products')->with('success', 'Producto eliminado exitosamente!');
+        return view('products.table',[
+            'products' => $products
+        ]);
+    }
+
+    public function destroy($id){
+    $product = \App\Models\Product::findOrFail($id);
+    $product->delete();
+
+    return redirect()->route('admin.products.table')->with('success', 'Producto eliminado correctamente.');
     }
 }
