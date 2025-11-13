@@ -32,7 +32,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-dark" href="../pages/virtual-reality.html">
+           <a class="nav-link {{Request:: is('admin/brand/create')?'active bg-gradient-dark text-white': 'text-dark'}}" href="{{route('admin.brand.table')}}">
             <i class="material-symbols-rounded opacity-5">view_in_ar</i>
             <span class="nav-link-text ms-1">Brands</span>
           </a>

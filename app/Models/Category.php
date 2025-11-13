@@ -12,5 +12,10 @@ class Category extends Model
     protected $fillable = ['name'];
     protected $primaryKey = 'id';
     public $timestamps = true;
-    
+
+    // Relación inversa con Product
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'category_id');
+    }
 }

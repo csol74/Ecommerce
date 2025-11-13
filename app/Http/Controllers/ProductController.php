@@ -12,7 +12,9 @@ class ProductController extends Controller
 
     public function index()
     {
-        return view('products.index');
+        $categories = Category::all();
+        $products = Product::with(['category', 'brand'])->get();
+        return view('products.index', compact('categories', 'products'));
     }
 
 
@@ -59,9 +61,9 @@ class ProductController extends Controller
     }
 
     public function destroy($id){
-    $product = \App\Models\Product::findOrFail($id);
-    $product->delete();
+        $product = \App\Models\Product::findOrFail($id);
+        $product->delete();
 
-    return redirect()->route('admin.products.table')->with('success', 'Producto eliminado correctamente.');
+        return redirect()->route('admin.products.table')->with('success', 'Producto eliminado correctamente.');
     }
 }

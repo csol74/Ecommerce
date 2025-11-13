@@ -35,6 +35,6 @@ class CategoryController extends Controller
     $category = \App\Models\Category::findOrFail($id);
     $category->delete();
 
-    return redirect()->route('admin.category.table')->with('success', 'Producto eliminado correctamente.');
+    return redirect()->route('admin.category.table')->with('success', 'Categoria eliminada correctamente.');
     }
 }

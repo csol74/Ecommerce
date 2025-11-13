@@ -1,106 +1,116 @@
 @extends('layouts.app')
 
-@section('css')
-    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
-@endsection
+<link rel="stylesheet" href="{{ asset('css/index.css') }}">
+<link rel="stylesheet" href="{{ asset('css/products-filter.css') }}">
 
 @section('content')
-<main class="products-section py-5">
-    <div class="container">
-        <h1 class="text-center mb-4">Gestión de Productos</h1>
-
-        <!-- Barra de búsqueda y botón -->
-        <div class="header-actions d-flex justify-content-between align-items-center mb-4">
-            <input type="text" class="search-box form-control w-50" placeholder="Buscar productos..." id="searchInput">
-            <a href="{{ url('/products/create') }}" class="btn btn-primary">+ Nuevo Producto</a>
+<div class="navbar">
+    <div class="navbar-brand">
+        <div class="navbar-logo">
+            <img src="/img/unab_logo.png" alt="Logo">
         </div>
+        <h1 class="navbar-title">Mi Tienda</h1>
+    </div>
+    <nav>
+        <a href="{{ url('/products') }}">Productos</a>
+        <a href="{{ url('/products/create') }}">Crear Producto</a>
+    </nav>
+</div>
 
-        <!-- Estadísticas -->
-        <div class="stats bg-light p-3 rounded mb-4 shadow-sm">
-            <div class="stats-content d-flex justify-content-between">
-                <span><strong id="productCount">8</strong> productos registrados</span>
-                <span>Total valor inventario: <strong>$12,450.00</strong></span>
+<div class="product-list">
+    <div class="list-container">
+        <h1>Nuestros Productos</h1>
+
+        <a href="{{ url('/products/create') }}" class="btn btn-primary mb-3">+ Crear Nuevo Producto</a>
+
+        <!-- Filtro por categoría -->
+        <div class="category-filters-wrapper">
+            <label class="filter-label">Filtrar por categoría:</label>
+            <div class="category-buttons">
+                <button class="category-filter active" data-category="all">
+                    Todas
+                </button>
+                @foreach($categories as $category)
+                    <button class="category-filter" data-category="{{ $category->id }}">
+                        {{ $category->name }}
+                    </button>
+                @endforeach
             </div>
         </div>
 
+        <!-- Estadísticas -->
+        <div class="stats-box">
+            <span><strong id="productCount">{{ $products->count() }}</strong> productos registrados</span>
+        </div>
+
         <!-- Grid de productos -->
-        <div class="products-grid row g-4" id="productsContainer">
-            <!-- Producto ejemplo -->
-            @foreach ([
-                [
-                    'brand' => 'Samsung',
-                    'name' => 'Galaxy S24 Ultra',
-                    'price' => '$1,299.99',
-                    'img' => 'https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=400&h=300&fit=crop',
-                    'desc' => 'Smartphone de última generación con cámara de 200MP, pantalla AMOLED de 6.8" y procesador Snapdragon 8 Gen 3.',
-                ],
-                [
-                    'brand' => 'Apple',
-                    'name' => 'MacBook Pro 16"',
-                    'price' => '$2,499.99',
-                    'img' => 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&h=300&fit=crop',
-                    'desc' => 'Laptop profesional con chip M3 Pro, 18GB RAM, 512GB SSD. Perfecta para desarrollo y diseño.',
-                ],
-                [
-                    'brand' => 'Sony',
-                    'name' => 'WH-1000XM5',
-                    'price' => '$399.99',
-                    'img' => 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=400&h=300&fit=crop',
-                    'desc' => 'Auriculares inalámbricos con cancelación de ruido líder y 30h de batería.',
-                ],
-                [
-                    'brand' => 'Dell',
-                    'name' => 'Monitor UltraSharp 27"',
-                    'price' => '$599.99',
-                    'img' => 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&h=300&fit=crop',
-                    'desc' => 'Monitor 4K IPS con precisión de color profesional, ideal para diseño gráfico.',
-                ],
-                [
-                    'brand' => 'Logitech',
-                    'name' => 'MX Master 3S',
-                    'price' => '$99.99',
-                    'img' => 'https://images.unsplash.com/photo-1527814050087-3793815479db?w=400&h=300&fit=crop',
-                    'desc' => 'Mouse ergonómico con scroll electromagnético y conectividad multi-dispositivo.',
-                ],
-                [
-                    'brand' => 'Nintendo',
-                    'name' => 'Switch OLED',
-                    'price' => '$349.99',
-                    'img' => 'https://images.unsplash.com/photo-1578303512597-81e6cc155b3e?w=400&h=300&fit=crop',
-                    'desc' => 'Consola híbrida con pantalla OLED de 7", audio mejorado y 64GB internos.',
-                ],
-                [
-                    'brand' => 'Razer',
-                    'name' => 'DeathAdder V3 Pro',
-                    'price' => '$149.99',
-                    'img' => 'https://root-nation.com/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2023/03/razer-deathadder-v3-pro-08.jpg.webp',
-                    'desc' => 'Mouse gaming inalámbrico con sensor Focus Pro 30K y switches ópticos de 90M clicks.',
-                ],
-                [
-                    'brand' => 'ASUS',
-                    'name' => 'ROG Strix RTX 4080',
-                    'price' => '$1,199.99',
-                    'img' => 'https://images.unsplash.com/photo-1591488320449-011701bb6704?w=400&h=300&fit=crop',
-                    'desc' => 'Tarjeta gráfica de alto rendimiento para gaming 4K y creación de contenido.',
-                ]
-            ] as $i => $product)
-                <div class="col-md-3 col-sm-6">
-                    <div class="product-card shadow-sm p-3 rounded h-100 d-flex flex-column">
-                        <div class="product-image mb-3">
-                            <img src="{{ $product['img'] }}" alt="{{ $product['name'] }}" class="img-fluid rounded">
-                        </div>
-                        <div class="product-brand fw-bold">{{ $product['brand'] }}</div>
-                        <div class="product-name">{{ $product['name'] }}</div>
-                        <div class="product-description small text-muted">{{ $product['desc'] }}</div>
-                        <div class="product-price mt-2 fw-bold">{{ $product['price'] }}</div>
-                        <div class="product-actions mt-auto d-flex justify-content-between">
-                            <a href="/products/{{ $i+1 }}" class="btn btn-outline-primary btn-sm">Ver Detalles</a>
-                            <a href="/products/{{ $i+1 }}/edit" class="btn btn-outline-secondary btn-sm">Editar</a>
+        <div class="products-grid" id="productsContainer">
+            @forelse ($products as $product)
+                <div class="product-card product-item" data-category="{{ $product->category_id }}">
+                    <div class="product-image-card">
+                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=300&fit=crop" alt="{{ $product->name }}">
+                    </div>
+                    <div class="product-card-body">
+                        <div class="product-brand">{{ $product->brand->name ?? 'Sin marca' }}</div>
+                        <h3 class="product-title">{{ $product->name }}</h3>
+                        <p class="product-desc">{{ Str::limit($product->description, 80) }}</p>
+                        <span class="category-badge">{{ $product->category->name ?? 'Sin categoría' }}</span>
+                        <p class="price">${{ number_format($product->price, 2) }}</p>
+                        <div class="product-actions">
+                            <a href="{{ url('/products/' . $product->id) }}" class="btn btn-primary">Ver Detalles</a>
+                            <a href="{{ url('/products/' . $product->id . '/edit') }}" class="btn btn-secondary">Editar</a>
                         </div>
                     </div>
                 </div>
-            @endforeach
+            @empty
+                <p class="no-products">No hay productos disponibles.</p>
+            @endforelse
+        </div>
+
+        <!-- Mensaje sin resultados -->
+        <div id="noResults" class="no-results-message">
+            No se encontraron productos en esta categoría.
         </div>
     </div>
-</main>
+</div>
+
+<div class="footer">
+    <p>&copy; 2025 Mi Tienda. Todos los derechos reservados.</p>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const categoryButtons = document.querySelectorAll('.category-filter');
+    const productItems = document.querySelectorAll('.product-item');
+    const noResultsMessage = document.getElementById('noResults');
+    const productCountElement = document.getElementById('productCount');
+
+    categoryButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            categoryButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+
+            const selectedCategory = this.getAttribute('data-category');
+            let visibleCount = 0;
+
+            productItems.forEach(item => {
+                const itemCategory = item.getAttribute('data-category');
+
+                if (selectedCategory === 'all') {
+                    item.style.display = 'block';
+                    visibleCount++;
+                } else if (itemCategory === selectedCategory) {
+                    item.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            productCountElement.textContent = visibleCount;
+            noResultsMessage.style.display = visibleCount === 0 ? 'block' : 'none';
+        });
+    });
+});
+</script>
 @endsection
